@@ -51,4 +51,14 @@ class InteractiveRecord
     sql = "SELECT * FROM #{table_name} WHERE name = '#{name}'"
     DB[:conn].execute(sql)
   end
+
+  def self.find_by(info)
+  sql = <<-SQL
+    SELECT *
+    FROM #{self.table_name}
+    WHERE #{info.keys.first.to_s} = (?)
+  SQL
+
+  DB[:conn].execute(sql, info.values.first)
+end
 end
